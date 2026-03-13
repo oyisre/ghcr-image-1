@@ -1,6 +1,7 @@
 FROM ubuntu:22.04
 
 ENV DEBIAN_FRONTEND=noninteractive
+ENV NVIDIA_DRIVER_CAPABILITIES=compute,utility,graphics
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     openssh-server \
@@ -37,6 +38,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN mkdir -p /var/run/sshd \
  && useradd -m -s /bin/bash dev \
  && usermod -aG sudo dev \
+ && echo 'dev ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/dev \
+ && chmod 440 /etc/sudoers.d/dev \
  && mkdir -p /home/dev/.ssh \
  && chown -R dev:dev /home/dev/.ssh \
  && chmod 700 /home/dev/.ssh
