@@ -15,8 +15,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     htop \
     unzip \
     zip \
+    xz-utils \
+    file \
+    pkg-config \
     cmake \
+    ninja-build \
     build-essential \
+    clang \
+    lldb \
+    gdb \
     perl \
     python3 \
     python3-pip \
@@ -29,10 +36,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libxi-dev \
     libxcursor-dev \
     libasound2-dev \
+    libgl1-mesa-dev \
+    libegl1 \
+    mesa-utils \
     libvulkan-dev \
     vulkan-tools \
     xvfb \
     tmux \
+    jq \
+    ripgrep \
  && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /var/run/sshd \
@@ -54,6 +66,8 @@ LABEL org.opencontainers.image.source="https://github.com/oyisre/ghcr-image-1"
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
+
+WORKDIR /workspace
 
 EXPOSE 22
 ENTRYPOINT ["/entrypoint.sh"]
